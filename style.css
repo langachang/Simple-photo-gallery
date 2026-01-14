@@ -1,36 +1,15 @@
-* { box-sizing: border-box; }
-
 body {
-    margin: 0;
     font-family: Arial;
+    background: #667eea;
     color: white;
 }
 
-.spiral-bg {
-    position: fixed;
-    width: 200%;
-    height: 200%;
-    background: repeating-conic-gradient(
-        #667eea 0deg,
-        #764ba2 20deg,
-        #667eea 40deg
-    );
-    animation: spin 20s linear infinite;
-    top: -50%;
-    left: -50%;
-    z-index: -1;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
 .container {
-    background: rgba(0,0,0,0.65);
-    max-width: 400px;
-    margin: 90px auto;
-    padding: 25px;
-    border-radius: 12px;
+    background: rgba(0,0,0,0.6);
+    width: 350px;
+    margin: 80px auto;
+    padding: 20px;
+    border-radius: 10px;
     text-align: center;
 }
 
@@ -38,14 +17,13 @@ input, button {
     width: 90%;
     padding: 10px;
     margin: 8px 0;
-    border-radius: 6px;
+    border-radius: 5px;
     border: none;
 }
 
 button {
     background: #ff7675;
     color: white;
-    cursor: pointer;
 }
 
 .gallery {
@@ -57,15 +35,13 @@ button {
 .photo {
     background: white;
     color: black;
-    margin: 8px;
-    padding: 10px;
-    border-radius: 10px;
-    width: 160px;
+    margin: 6px;
+    padding: 5px;
+    border-radius: 8px;
 }
 
 .photo img {
-    width: 140px;
-    height: 140px;
-    border-radius: 8px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
 }
