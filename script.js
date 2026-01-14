@@ -1,35 +1,46 @@
-// REGISTER
-function register() {
-    const username = document.getElementById("regUsername").value;
-    const password = document.getElementById("regPassword").value;
+// REGISTER USER
+function registerUser() {
+    let username = document.getElementById("regUser").value;
+    let password = document.getElementById("regPass").value;
 
-    if (!username || !password) {
-        alert("Please fill all fields");
+    if (username === "" || password === "") {
+        alert("Fill all fields");
         return;
     }
 
-    let users = JSON.parse(localStorage.getItem("users")) || {};
+    let users = JSON.parse(localStorage.getItem("users")) || [];
 
-    if (users[username]) {
-        alert("Username already exists");
-        return;
+    // Check if user exists
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].username === username) {
+            alert("Username already exists");
+            return;
+        }
     }
 
-    users[username] = password;
+    users.push({ username: username, password: password });
     localStorage.setItem("users", JSON.stringify(users));
 
     alert("Registration successful!");
     window.location.href = "login.html";
 }
 
-// LOGIN
-function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+// LOGIN USER
+function loginUser() {
+    let username = document.getElementById("loginUser").value;
+    let password = document.getElementById("loginPass").value;
 
-    let users = JSON.parse(localStorage.getItem("users")) || {};
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let valid = false;
 
-    if (!users[username] || users[username] !== password) {
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].username === username && users[i].password === password) {
+            valid = true;
+            break;
+        }
+    }
+
+    if (!valid) {
         alert("Invalid username or password");
         return;
     }
@@ -46,15 +57,15 @@ function logout() {
 
 // UPLOAD PHOTO
 function uploadPhoto() {
-    const userId = localStorage.getItem("userId");
-    const file = document.getElementById("photoInput").files[0];
+    let file = document.getElementById("photoInput").files[0];
+    let userId = localStorage.getItem("userId");
 
     if (!file) {
-        alert("Select an image");
+        alert("Select image");
         return;
     }
 
-    const reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = function () {
         let photos = JSON.parse(localStorage.getItem("photos")) || [];
         photos.push({ userId: userId, image: reader.result });
@@ -66,25 +77,25 @@ function uploadPhoto() {
 
 // SHOW USER PHOTOS WITH SERIAL NUMBER
 function showPhotos() {
-    const gallery = document.getElementById("gallery");
+    let gallery = document.getElementById("gallery");
     if (!gallery) return;
 
-    const userId = localStorage.getItem("userId");
     let photos = JSON.parse(localStorage.getItem("photos")) || [];
+    let userId = localStorage.getItem("userId");
 
     gallery.innerHTML = "";
-    let serial = 1;
+    let s = 1;
 
-    photos.forEach((photo, index) => {
-        if (photo.userId === userId) {
+    photos.forEach((p, index) => {
+        if (p.userId === userId) {
             gallery.innerHTML += `
                 <div class="photo">
-                    <strong>S.No. ${serial}</strong>
-                    <img src="${photo.image}">
+                    <strong>S.No. ${s}</strong><br>
+                    <img src="${p.image}">
                     <button onclick="deletePhoto(${index})">Delete</button>
                 </div>
             `;
-            serial++;
+            s++;
         }
     });
 }
@@ -97,5 +108,4 @@ function deletePhoto(index) {
     showPhotos();
 }
 
-// AUTO LOAD
 showPhotos();
