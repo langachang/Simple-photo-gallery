@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Logout</title>
+</head>
 <body>
+
 <script>
-localStorage.removeItem("currentUser");
-alert("Logged out successfully");
-window.location.href ="login.html";
+    localStorage.removeItem("loggedInUser");
+    alert("Logged out successfully");
+    window.location.href = "login.html";
 </script>
+
 </body>
 </html>
