@@ -1,111 +1,105 @@
-// REGISTER USER
-function registerUser() {
-    let username = document.getElementById("regUser").value;
-    let password = document.getElementById("regPass").value;
+// REGISTER
+function register() {
+    var u = document.getElementById("regUser").value;
+    var p = document.getElementById("regPass").value;
+    var m = document.getElementById("regMobile").value;
 
-    if (username === "" || password === "") {
-        alert("Fill all fields");
+    if (u === "" || p === "" || m === "") {
+        alert("All fields required");
         return;
     }
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+    var users = JSON.parse(localStorage.getItem("users")) || [];
 
-    // Check if user exists
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].username === username) {
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].username === u) {
             alert("Username already exists");
             return;
         }
     }
 
-    users.push({ username: username, password: password });
+    users.push({
+        username: u,
+        password: p,
+        mobile: m
+    });
+
     localStorage.setItem("users", JSON.stringify(users));
 
-    alert("Registration successful!");
+    alert("Registered successfully");
     window.location.href = "login.html";
 }
 
-// LOGIN USER
-function loginUser() {
-    let username = document.getElementById("loginUser").value;
-    let password = document.getElementById("loginPass").value;
+// LOGIN
+function login() {
+    var u = document.getElementById("loginUser").value;
+    var p = document.getElementById("loginPass").value;
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-    let valid = false;
+    var users = JSON.parse(localStorage.getItem("users")) || [];
+    var success = false;
 
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].username === username && users[i].password === password) {
-            valid = true;
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].username === u && users[i].password === p) {
+            success = true;
             break;
         }
     }
 
-    if (!valid) {
+    if (!success) {
         alert("Invalid username or password");
         return;
     }
 
-    localStorage.setItem("userId", username);
-    window.location.href = "album.html";
+    localStorage.setItem("currentUser", u);
+    window.location.href = "index.html";
 }
 
-// LOGOUT
-function logout() {
-    localStorage.removeItem("userId");
-    window.location.href = "login.html";
+// CHECK LOGIN
+function checkLogin() {
+    if (!localStorage.getItem("currentUser")) {
+        window.location.href = "login.html";
+    }
+    showPhotos();
 }
 
 // UPLOAD PHOTO
 function uploadPhoto() {
-    let file = document.getElementById("photoInput").files[0];
-    let userId = localStorage.getItem("userId");
-
+    var file = document.getElementById("photoInput").files[0];
     if (!file) {
         alert("Select image");
         return;
     }
 
-    let reader = new FileReader();
+    var reader = new FileReader();
     reader.onload = function () {
-        let photos = JSON.parse(localStorage.getItem("photos")) || [];
-        photos.push({ userId: userId, image: reader.result });
+        var photos = JSON.parse(localStorage.getItem("photos")) || [];
+        photos.push({
+            user: localStorage.getItem("currentUser"),
+            image: reader.result
+        });
         localStorage.setItem("photos", JSON.stringify(photos));
         showPhotos();
     };
     reader.readAsDataURL(file);
 }
 
-// SHOW USER PHOTOS WITH SERIAL NUMBER
+// SHOW PHOTOS
 function showPhotos() {
-    let gallery = document.getElementById("gallery");
+    var gallery = document.getElementById("gallery");
     if (!gallery) return;
 
-    let photos = JSON.parse(localStorage.getItem("photos")) || [];
-    let userId = localStorage.getItem("userId");
+    var photos = JSON.parse(localStorage.getItem("photos")) || [];
+    var user = localStorage.getItem("currentUser");
 
     gallery.innerHTML = "";
-    let s = 1;
 
-    photos.forEach((p, index) => {
-        if (p.userId === userId) {
+    photos.forEach(function (p) {
+        if (p.user === user) {
             gallery.innerHTML += `
                 <div class="photo">
-                    <strong>S.No. ${s}</strong><br>
                     <img src="${p.image}">
-                    <button onclick="deletePhoto(${index})">Delete</button>
                 </div>
             `;
-            s++;
         }
     });
 }
-
-// DELETE PHOTO
-function deletePhoto(index) {
-    let photos = JSON.parse(localStorage.getItem("photos"));
-    photos.splice(index, 1);
-    localStorage.setItem("photos", JSON.stringify(photos));
-    showPhotos();
-}
-
-showPhotos();
