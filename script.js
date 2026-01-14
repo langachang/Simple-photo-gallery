@@ -1,22 +1,36 @@
-// LOGIN / REGISTER
-function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+// REGISTER
+function register() {
+    const username = document.getElementById("regUsername").value;
+    const password = document.getElementById("regPassword").value;
 
     if (!username || !password) {
-        alert("Enter username and password");
+        alert("Please fill all fields");
         return;
     }
 
     let users = JSON.parse(localStorage.getItem("users")) || {};
 
-    if (!users[username]) {
-        users[username] = password;
-        localStorage.setItem("users", JSON.stringify(users));
+    if (users[username]) {
+        alert("Username already exists");
+        return;
     }
 
-    if (users[username] !== password) {
-        alert("Wrong password");
+    users[username] = password;
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Registration successful!");
+    window.location.href = "login.html";
+}
+
+// LOGIN
+function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    let users = JSON.parse(localStorage.getItem("users")) || {};
+
+    if (!users[username] || users[username] !== password) {
+        alert("Invalid username or password");
         return;
     }
 
@@ -61,12 +75,12 @@ function showPhotos() {
     gallery.innerHTML = "";
     let serial = 1;
 
-    photos.forEach((p, index) => {
-        if (p.userId === userId) {
+    photos.forEach((photo, index) => {
+        if (photo.userId === userId) {
             gallery.innerHTML += `
                 <div class="photo">
                     <strong>S.No. ${serial}</strong>
-                    <img src="${p.image}">
+                    <img src="${photo.image}">
                     <button onclick="deletePhoto(${index})">Delete</button>
                 </div>
             `;
