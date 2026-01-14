@@ -4,16 +4,16 @@
     <title>Private Photo Album</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
-<div class="spiral-bg"></div>
+<body onload="checkLogin()">
 
 <div class="container">
-    <h2>Private Photo Album</h2>
+    <h2>My Private Photo Album</h2>
 
     <input type="file" id="photoInput" accept="image/*">
-    <button onclick="uploadPhoto()">Upload</button>
-    <button onclick="logout()">Logout</button>
+    <button type="button" onclick="uploadPhoto()">Upload</button>
+
+    <br><br>
+    <a href="logout.html"><button>Logout</button></a>
 
     <div class="gallery" id="gallery"></div>
 </div>
