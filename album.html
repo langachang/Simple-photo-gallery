@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Photo Album</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="spiral-bg"></div>
+
+<div class="container">
+    <h2>My Private Photo Album</h2>
+
+    <input type="file" id="photoInput" accept="image/*">
+    <button onclick="uploadPhoto()">Upload Photo</button>
+    <button onclick="logout()">Logout</button>
+
+    <div class="gallery" id="gallery"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

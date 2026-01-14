@@ -1,0 +1,97 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    color: white;
+}
+
+/* Spiral Background */
+.spiral-bg {
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background: repeating-conic-gradient(
+        from 0deg,
+        #667eea 0deg,
+        #764ba2 20deg,
+        #667eea 40deg
+    );
+    animation: spin 20s linear infinite;
+    z-index: -1;
+    top: -50%;
+    left: -50%;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Main Container */
+.container {
+    background: rgba(0, 0, 0, 0.6);
+    width: 90%;
+    max-width: 450px;
+    margin: 80px auto;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+/* Inputs & Buttons */
+input, button {
+    width: 90%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: none;
+}
+
+button {
+    background: #ff7675;
+    color: white;
+    cursor: pointer;
+}
+
+/* Gallery */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.photo {
+    background: white;
+    color: black;
+    margin: 8px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 160px;
+}
+
+.photo img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.photo strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.photo button {
+    margin-top: 5px;
+    background: red;
+    width: 100%;
+}
