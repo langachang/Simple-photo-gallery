@@ -3,7 +3,8 @@
 <body>
 <script>
 localStorage.removeItem("currentUser");
-window.location.href ="register.html";
+alert("Logged out successfully");
+window.location.href ="login.html";
 </script>
 </body>
 </html>
